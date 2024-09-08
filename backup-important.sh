@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Starts from systemd timer
-# Backup the important stuff every 6h
-# jontas@gmx.com in 2021
+# A systemd timer runs this script every 6 hours.
+# Backup the important stuff to both local and remote mounted file system.
+# jontas@gmx.com in 2021, updated in 2024
 
 
 backup_dir="$HOME/MY_BAK"

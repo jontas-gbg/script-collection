@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Convert Epoch timestamps to human readable.
+# jontas@gmx.com in 2017
+
 input_file="$HOME/.xsession-errors"
 output_file="$HOME/.local/share/mylogs/xsession-errors.log"
 

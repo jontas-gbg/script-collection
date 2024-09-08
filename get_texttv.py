@@ -2,6 +2,7 @@
 
 # For use with a systemd timer running every n minutes and fetch sport results
 # A simple bash tui for display the result
+# Shell script: sport
 #
 # jontas@gmx.com in 2023 
 
@@ -13,8 +14,7 @@ from bs4 import BeautifulSoup
 BASE_URL = 'https://www.svt.se/text-tv'
 BASE_FILE_PATH = '/home/jontas/.cache/text-tv/'
 
-# Check if text files exists - if not - an empty 'with' block creates a new file
-# Also create directory if needed
+# Check and create files/folder if needed
 def create_file_if_not_exists(file_path):
     if not os.path.exists(file_path):
         os.makedirs(os.path.dirname(file_path), exist_ok=True)  
@@ -34,7 +34,7 @@ for entry in pages:
     url = f"{BASE_URL}/{entry['page']}"
     file_path = os.path.join(BASE_FILE_PATH, entry['file_name'])
 
-    create_file_if_not_exists(file_path)  # Check and create file if needed
+    create_file_if_not_exists(file_path)
 
     response = requests.get(url)
     html_content = response.content

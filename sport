@@ -3,6 +3,7 @@
 # Show various result to terminal, scraped from 
 # SVT (Swedish National TV). A systemd timer triggs a Python script 
 # every n minutes scraping the site and clean it up with BeautifulSoup. 
+# Python script: get_texttv.py
 #
 # This is the simple front end to view prefered info in terminal.
 # jontas@gmx.com in 2022

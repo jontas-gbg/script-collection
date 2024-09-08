@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# systemd timer fire once a day
-# download and merge hosts files. 
+# download and merge hosts files.
+# systemd timer run this once a day 
 # jontas@gmx.com in 2022, updated in 2024
 
 

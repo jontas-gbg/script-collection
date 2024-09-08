@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# Quick and easy TUI for Pacman and Reflector
+# I never remember all attributes for pacman anyway...
+# jontas@gmx.com in 2020
+
 import os
 
 

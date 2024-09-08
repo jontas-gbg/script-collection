@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Runs from a systemd timer once a week cleaning up backup files
-# A sed command make sure to always save the last 3 backups in both 
+# A 'sed' command make sure to always ignore the last 3 backups in both 
 # local and remote dirs.
-# jontas@gmx.com in 2024
+# jontas@gmx.com in 2020. updated in 2024
 
 LOCAL_BACKUP_DIR="$HOME/Public"
 REMOTE_BACKUP_DIR="$HOME/OneDrive/Arch_backup/Tarballs"

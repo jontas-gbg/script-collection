@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# TUI for quick access to journalctl. LANG:sv
+# jontas@gmx.com in 2019, updated 2022, 2023, 2024
+
 import os
 
 
@@ -21,7 +24,7 @@ def show_menu():
                "Service för clean",
                "Service för backup",
                "Service för speedtest",
-               "Reload alla user Daemons",
+               "Reload alla --user Daemons",
                "Reload alla Daemons",
                "Avsluta"]
  
