@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+c_degrees = [-35, -30, -25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30, 35]
+index = 0
+
+print('    C       F')
+print('  -------------')
+while index < len(c_degrees):
+    C = c_degrees[index]
+    F = (9.0/5)*C + 32
+
+    print(  '  %4d   %5d' % (C, F))
+    index += 1  

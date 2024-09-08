@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# This script prints out various result to terminal, scraped from 
+# SVT (Swedish National TV). A systemd timer triggs a Python script 
+# every n minutes scraping the site and clean it up with BeautifulSoup. 
+#
+# This is the simple front end used with arguments to 
+# view prefered info in terminal.
+# jontas@gmx.com in 2022
+
+
+# Const
+readonly TEXT_TV_CACHE_DIR="$HOME/.cache/text-tv"
+
+case "$1" in
+  -r | --resultat)
+    tail +4 "${TEXT_TV_CACHE_DIR}/377.txt" | head -n -3
+    ;;
+  -t | --tabell)
+    tail +4 "${TEXT_TV_CACHE_DIR}/343.txt" | head -n -7
+    ;;
+  -n | --nästa | --next)
+    tail +4 "${TEXT_TV_CACHE_DIR}/344.txt" | head -n -3
+    ;;
+  -s | --superettan)
+    tail +4 "${TEXT_TV_CACHE_DIR}/345.txt" | head -n -3
+    ;;
+  *)
+    echo "Usage: $0 [-r | -t | -n | -se ] or [--resultat | --tabell | --nästa | --superettan]"
+    exit 1
+    ;;
+esac

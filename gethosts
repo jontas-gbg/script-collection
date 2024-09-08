@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# systemd timer fire once a day
+# download and merge hosts files. 
+# jontas@gmx.com in 2022, updated in 2024
+
+
+ADAWAY_BLOCK_HOSTS_URL="https://adaway.org/hosts.txt"
+FRELLWITS_HOSTS_URL="https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Hosts-File.txt"
+BLOCK_JAVASCRIPT_MINERS="https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/hosts.txt"
+
+CACHE_DIR="/tmp/hosts_cache"
+TEMP_FILE="/tmp/combined_hosts.txt"
+TARGET_FILE="/etc/hosts"
+
+mkdir -p "${CACHE_DIR}"
+
+# remove tmp files if script is aborted
+trap 'rm -f "${CACHE_DIR}"/*.txt "${TEMP_FILE}"' EXIT
+
+download_and_cache() {
+  local url="$1"
+  local cache_file="$2"
+  curl -s "${url}" -o "${cache_file}"
+}
+
+download_and_cache "${ADAWAY_BLOCK_HOSTS_URL}" "${CACHE_DIR}/adaway.txt"
+download_and_cache "${FRELLWITS_HOSTS_URL}" "${CACHE_DIR}/frellwits.txt"
+download_and_cache "${BLOCK_JAVASCRIPT_MINERS}" "${CACHE_DIR}/miners.txt"
+
+cat "${CACHE_DIR}/"*.txt | grep -v "#" | sort | uniq > "${TEMP_FILE}"
+sudo cp "${TEMP_FILE}" "${TARGET_FILE}"
+

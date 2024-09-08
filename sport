@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Show various result to terminal, scraped from 
+# SVT (Swedish National TV). A systemd timer triggs a Python script 
+# every n minutes scraping the site and clean it up with BeautifulSoup. 
+#
+# This is the simple front end to view prefered info in terminal.
+# jontas@gmx.com in 2022
+
+
+# Const
+readonly TEXT_TV_CACHE_DIR="$HOME/.cache/text-tv"
+
+while true; do
+PS3='Välj från menyn: '
+options=(
+  "Målservice" 
+  "Allsvenska tabellen"
+  "Matcher"
+  "Superettan"
+  "Avsluta")
+
+select opt in "${options[@]}"
+  do
+    case $opt in
+      "Målservice")
+        tail +4 "${TEXT_TV_CACHE_DIR}/377.txt" | head -n -3
+        ;;
+      "Allsvenska tabellen")
+        tail +4 "${TEXT_TV_CACHE_DIR}/343.txt" | head -n -7
+        ;;
+      "Matcher")
+        tail +4 "${TEXT_TV_CACHE_DIR}/344.txt" | head -n -3
+        ;;
+      "Superettan")
+        tail +4 "${TEXT_TV_CACHE_DIR}/345.txt" | head -n -3
+        ;;
+      "Avsluta")
+        exit 0
+        ;;
+      *) echo -e "invalid option $REPLY";;
+    esac
+  done
+done

@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+
+######
+# 2024-03-22, Jonas Stolt, jontas@gmx.com
+# Se Readme.md för mer information. 
+##### 
+
+
+import os
+import sys
+
+# Versionskontroll. Det krävs minst v 3.6 för f-strängar
+version_info = sys.version_info
+major_version = version_info.major
+minor_version = version_info.minor
+
+required_major = 3
+required_minor = 6
+
+try:
+	if major_version < required_major or \
+		(major_version == required_major and \
+		 minor_version < required_minor):
+		raise Exception("Du behöver minst Python v. 3.6")
+
+except Exception as e:
+    print(e)
+    exit(1)
+
+# Visa alla manual-filer genom att loopa igenom mappen
+# Ta bort ".text" för snyggare formatering
+def list_all_manuals():
+    manuals_dir = os.path.expanduser("~/.manualer")
+    try:
+        for filename in os.listdir(manuals_dir):
+            if filename.endswith(".text"):
+                program_name = filename[:-5]  # Ta bort ".text"-suffixet
+                print(program_name)
+    except FileNotFoundError:
+        print("Kunde inte hitta katalogen ~/.manualer.")
+
+def main():
+    if len(sys.argv) < 2: # Program med färre än 2 tkn finns inte. 
+        print("Ange ett programnamn som argument.")
+        sys.exit(1)
+
+    program = sys.argv[1]
+
+    if program.lower() == "alla":
+        list_all_manuals()
+    else:
+        manual_path = f"{program}.text"
+        try:
+            with open(os.path.join(os.path.expanduser("~/.manualer"), manual_path), "r") as manual_file:
+                print(manual_file.read())
+        except FileNotFoundError:
+            print(f"Ingen manual hittades för programmet '{program}'.")
+
+if __name__ == "__main__":
+    main()

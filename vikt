@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+
+kg_values = [65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 130, 140]
+index = 0
+
+print('     KG     Lb')
+
+while index < len(kg_values):
+    kg = kg_values[index]
+    lb = kg * 2.20462  # Konverteringsfaktorn från kg till lb
+
+    print('  %5d   %5d' % (kg, lb))
+    
+    index += 1
