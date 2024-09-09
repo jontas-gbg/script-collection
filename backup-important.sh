@@ -17,6 +17,7 @@ backup_directories=(
   "$HOME/.local/bin"
   "$HOME/.config/systemd"
   "$HOME/Documents/zim"
+  "$HOME/Documents/AF"
   "$HOME/Documents/Script"
   "$HOME/.config/conky"
   # continue here if needed
