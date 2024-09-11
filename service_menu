@@ -12,47 +12,47 @@ my_choice="    systemd - timers och services"
 
 # Show a menu for systemd {timer,service}
 show_menu() {
-    clear
-    echo "${draw_separator_line}"
-    echo -e "\033[1m${my_choice}\033[m"
-    echo "${draw_separator_line}"
-    options=("Reload deamons"
-             "Reload deamons (user)"
-             "Visa alla timers"
-             "Visa alla timers (user)"
-             "Visa aktiva timers"
-             "Visa aktiva timers (user)"
-             "Visa alla services"
-             "Visa aktiva services"
-             "Visa alla unit files"
-             "Visa alla unit files (user)"
-             "Avsluta")
+  clear
+  echo "${draw_separator_line}"
+  echo -e "\033[1m${my_choice}\033[m"
+  echo "${draw_separator_line}"
+  options=("Reload deamons"
+         "Reload deamons (user)"
+         "Visa alla timers"
+         "Visa alla timers (user)"
+         "Visa aktiva timers"
+         "Visa aktiva timers (user)"
+         "Visa alla services"
+         "Visa aktiva services"
+         "Visa alla unit files"
+         "Visa alla unit files (user)"
+         "Avsluta")
 
-    while true; do
-        for i in "${!options[@]}"; do
-            echo "$((i+1)). ${options[i]}"
-        done
-        # shellcheck disable=2162
-        read -p "$(echo -e "\033[1m\033[33m${make_a_choise}\033[m")" choice
-
-        if [[ "${choice}" =~ ^[0-9]+$ ]] && [ "${choice}" -ge 1 ] && [ "${choice}" -le 11 ]; then
-            case ${choice} in
-                1) sudo systemctl daemon-reload ;;
-                2) systemctl --user daemon-reload ;;
-                3) systemctl list-timers --all ;;
-                4) systemctl --user list-timers --all ;;
-                5) systemctl list-timers ;;
-                6) systemctl --user list-timers ;;
-                7) systemctl list-units --type=service ;;
-                8) systemctl list-units --type=service --state=running ;;
-                9) systemctl list-unit-files ;;
-                10) systemctl --user list-unit-files ;;
-                11) exit 0 ;;
-            esac
-        else
-            echo "Ogiltigt val, försök igen."
-        fi
+  while true; do
+    for i in "${!options[@]}"; do
+      echo "$((i+1)). ${options[i]}"
     done
+    # shellcheck disable=2162
+    read -p "$(echo -e "\033[1m\033[33m${make_a_choise}\033[m")" choice
+
+    if [[ "${choice}" =~ ^[0-9]+$ ]] && [ "${choice}" -ge 1 ] && [ "${choice}" -le 11 ]; then
+      case ${choice} in
+        1) sudo systemctl daemon-reload ;;
+        2) systemctl --user daemon-reload ;;
+        3) systemctl list-timers --all ;;
+        4) systemctl --user list-timers --all ;;
+        5) systemctl list-timers ;;
+        6) systemctl --user list-timers ;;
+        7) systemctl list-units --type=service ;;
+        8) systemctl list-units --type=service --state=running ;;
+        9) systemctl list-unit-files ;;
+        10) systemctl --user list-unit-files ;;
+        11) exit 0 ;;
+      esac
+    else
+      echo "Ogiltigt val, försök igen."
+    fi
+  done
 }
 
 show_menu
