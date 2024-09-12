@@ -5,6 +5,8 @@
 #
 # Loop through a directory and create a menu in terminal with 
 # all .conkyrc for a quick look at given conky configuration
+# 
+# In my case, I've added an {bash,zsh} alias for fast access from terminal
 # jontas@gmx.com in 2024
 
 # Conky directory
