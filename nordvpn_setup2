@@ -2,7 +2,7 @@
 
 # My way to configure NordVPN client nice, quick and easy
 # It'll make sure to install wireguard-tools, an unmentioned dependency
-# and add user to nordvpn group as well as starting service, and connect.
+# and add user to nordvpn group as well as starting nordvpndservice, and connect.
 # Change settings and check "configure_firewall"-function to fit your needs.
 # jontas@gmx.com in 2024 
 
