@@ -1,8 +1,10 @@
 #!/bin/bash
 
+# Arch based distros with systemd
+#
 # My way to configure NordVPN client nice, quick and easy
 # It'll make sure to install wireguard-tools, an unmentioned dependency
-# and add user to nordvpn group as well as starting nordvpndservice, and connect.
+# and add user to nordvpn group as well as starting nordvpnd service and then connect.
 # Change settings and check "configure_firewall"-function to fit your needs.
 # jontas@gmx.com in 2024 
 
@@ -37,7 +39,7 @@ add_to_usergroup() {
     sudo usermod -aG nordvpn "$USER"
     echo "You have been added to nordvpn usergroup. Restart needed."
     read -p "Please press Enter to reboot: "
-    sudo reboot
+    systemctl reboot
   fi
 }
 add_to_usergroup
