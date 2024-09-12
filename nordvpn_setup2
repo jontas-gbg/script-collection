@@ -9,7 +9,7 @@
 vpn_settings=$(nordvpn settings)
 vpn_config="$HOME/.nordvpn_config"
 vpn_country="Sweden"
-vpn_city="Stockholm"
+vpn_city="Stockholm" # In most case, no need for it
 
 
 check_deps() {
