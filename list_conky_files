@@ -17,23 +17,22 @@ declare -a conky_files
 
 # Loopa through .conkyrc files and put them in the array
 for files in "${path_to_conky}"/*.conkyrc; do
-    conky_files+=("$files")
+  conky_files+=("$files")
 done
 
 # If dir is empty, exit
 if [[ ${#conky_files[@]} -eq 0 ]]; then
-    echo "Inga .conkyrc-filer hittades."
-    exit 1
+  echo "Inga .conkyrc-filer hittades."
+  exit 1
 fi
 
 # Create a menu and run selected conkyrc
-PS3="Välj en conky-konfiguration: "
+PS3="Chose a conky configuraton to run: "
 select conf in "${conky_files[@]}"; do
-    if [[ $? -eq 0 ]]; then
-        # Starta Conky med den valda filen
-        conky -c "${conf}" &> /dev/null &
-        break
-    else
-        echo "Invalid choice."
-    fi
+  if [[ $? -eq 0 ]]; then
+    conky -c "${conf}" &> /dev/null &
+    break
+  else
+    echo "Invalid choice."
+  fi
 done
