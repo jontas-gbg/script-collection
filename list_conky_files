@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# I've collected a tremendes amount of conky confs over the years.
+# This will help me give'em a quick preview.
+#
+# Loop through a directory and create a menu in terminal with 
+# all .conkyrc for a quick look at given conky configuration
+# jontas@gmx.com in 2024
+
+# Conky directory
+path_to_conky="/home/$USER/.config/conky"
+
+# Save file names to an array
+declare -a conky_files
+
+# Loopa through .conkyrc files and put them in the array
+for files in "${path_to_conky}"/*.conkyrc; do
+    conky_files+=("$files")
+done
+
+# If dir is empty, exit
+if [[ ${#conky_files[@]} -eq 0 ]]; then
+    echo "Inga .conkyrc-filer hittades."
+    exit 1
+fi
+
+# Create a menu and run selected conkyrc
+PS3="Välj en conky-konfiguration: "
+select conf in "${conky_files[@]}"; do
+    if [[ $? -eq 0 ]]; then
+        # Starta Conky med den valda filen
+        conky -c "${conf}" &> /dev/null &
+        break
+    else
+        echo "Invalid choice."
+    fi
+done

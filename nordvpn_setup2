@@ -1,0 +1,89 @@
+#!/bin/bash
+
+# My way to configure NordVPN client nice, quick and easy
+# It'll make sure to install wireguard-tools, an unmentioned dependency
+# and add user to nordvpn group as well as starting service, and connect.
+# Change settings and check "configure_firewall"-function to fit your needs.
+# jontas@gmx.com in 2024 
+
+vpn_settings=$(nordvpn settings)
+vpn_config="$HOME/.nordvpn_config"
+vpn_country="Sweden"
+vpn_city="Stockholm"
+
+
+check_deps() {
+  local pkg="wireguard-tools"
+  if pacman -Qi "${pkg}" &> /dev/null; then
+    echo -e "Checking for ${pkg}...\nIt's already installed"
+  else
+    echo -e "Installing $pkg\nThis is due to an unmentioned dependency"
+    sudo pacman -S --noconfirm "$pkg"
+  fi
+}
+
+# shellcheck disable=SC2143
+start_nordvpn_service() {
+  if [[ ! $(systemctl is-active nordvpnd | grep 'active') ]]; then
+    sudo systemctl enable --now nordvpnd
+    return 0
+  fi
+}
+start_nordvpn_service
+
+# shellcheck disable=SC2143 
+add_to_usergroup() {
+  if [[ ! $(groups $USER | grep 'nordvpn') ]]; then
+    sudo usermod -aG nordvpn "$USER"
+    echo "You have been added to nordvpn usergroup. Restart needed."
+    read -p "Please press Enter to reboot: "
+    sudo reboot
+  fi
+}
+add_to_usergroup
+
+
+write_config() {
+  touch "${vpn_config}" &&
+  echo "${vpn_settings}" > "${vpn_config}"
+}
+write_config
+
+configure_firewall() {
+  nordvpn whitelist add subnet 192.168.1.0/24 &&
+  nordvpn whitelist add port 137 &&
+  nordvpn whitelist add port 138 &&
+  nordvpn whitelist add port 139 &&
+  nordvpn whitelist add port 445    
+}
+
+go_online() {
+  nordvpn connect "${vpn_country}" "${vpn_city}"      
+}
+
+remove_config_file() {
+  rm -f "${vpn_config}"
+}
+
+
+check_firewall=$(awk 'NR==2 {print $2}' "${vpn_config}")
+check_analytics=$(awk 'NR==5 {print $2}' "${vpn_config}")
+check_tray=$(awk 'NR==9 {print $2}' "${vpn_config}")
+check_autoconnect=$(awk 'NR==10 {print $2}' "${vpn_config}")
+
+if [[ "${check_firewall}" == 'disabled' ]]; then
+    nordvpn set firewall enabled
+fi
+if [[ "${check_analytics}" == 'enabled' ]]; then
+    nordvpn set analytics disabled
+fi
+if [[ "${check_tray}" == 'disabled' ]]; then
+    nordvpn set tray enabled
+fi
+if [[ "${check_autoconnect}" == 'disabled' ]]; then
+    nordvpn set autoconnect on $vpn_country $vpn_city
+fi
+
+configure_firewall
+go_online
+remove_config_file
